@@ -1,0 +1,158 @@
+[
+    {
+        "id": "NEU-IT",
+        "school": "NEU",
+        "major_code": "IT101",
+        "major_name": "Khoa học Máy tính",
+        "scores": {
+            "2021": 26.5,
+            "2022": 27.0,
+            "2023": 27.5
+        },
+        "curriculum": [
+            {
+                "year": 1,
+                "subjects": [
+                    {
+                        "code": "MI101",
+                        "name": "Toán cao cấp 1",
+                        "credits": 3
+                    },
+                    {
+                        "code": "IT102",
+                        "name": "Nhập môn lập trình",
+                        "credits": 3
+                    },
+                    {
+                        "code": "LL101",
+                        "name": "Triết học Mác - Lênin",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 2,
+                "subjects": [
+                    {
+                        "code": "IT201",
+                        "name": "Cấu trúc dữ liệu và Giải thuật",
+                        "credits": 3
+                    },
+                    {
+                        "code": "IT202",
+                        "name": "Cơ sở dữ liệu",
+                        "credits": 3
+                    },
+                    {
+                        "code": "EN201",
+                        "name": "Tiếng Anh chuyên ngành",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 3,
+                "subjects": [
+                    {
+                        "code": "IT301",
+                        "name": "Mạng máy tính",
+                        "credits": 3
+                    },
+                    {
+                        "code": "IT302",
+                        "name": "Trí tuệ nhân tạo",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 4,
+                "subjects": [
+                    {
+                        "code": "IT401",
+                        "name": "Thực tập tốt nghiệp",
+                        "credits": 6
+                    },
+                    {
+                        "code": "IT402",
+                        "name": "Khóa luận tốt nghiệp",
+                        "credits": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "HVNH-FIN",
+        "school": "HVNH",
+        "major_code": "FIN201",
+        "major_name": "Tài chính ngân hàng",
+        "scores": {
+            "2021": 25.0,
+            "2022": 25.5,
+            "2023": 26.1
+        },
+        "curriculum": [
+            {
+                "year": 1,
+                "subjects": [
+                    {
+                        "code": "ECO101",
+                        "name": "Kinh tế vi mô",
+                        "credits": 3
+                    },
+                    {
+                        "code": "FIN101",
+                        "name": "Nhập môn tài chính tiền tệ",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 2,
+                "subjects": [
+                    {
+                        "code": "FIN202",
+                        "name": "Tài chính doanh nghiệp",
+                        "credits": 3
+                    },
+                    {
+                        "code": "FIN203",
+                        "name": "Thị trường chứng khoán",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 3,
+                "subjects": [
+                    {
+                        "code": "FIN301",
+                        "name": "Quản trị rủi ro tài chính",
+                        "credits": 3
+                    },
+                    {
+                        "code": "FIN302",
+                        "name": "Định giá tài sản",
+                        "credits": 3
+                    }
+                ]
+            },
+            {
+                "year": 4,
+                "subjects": [
+                    {
+                        "code": "FIN401",
+                        "name": "Thực tập chuyên môn",
+                        "credits": 6
+                    },
+                    {
+                        "code": "FIN402",
+                        "name": "Khóa luận tốt nghiệp",
+                        "credits": 9
+                    }
+                ]
+            }
+        ]
+    }
+]
