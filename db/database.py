@@ -42,13 +42,13 @@ def _get_collection():
 
 def insert_majors(data: list) -> int:
     """
-    Xóa toàn bộ dữ liệu cũ và insert danh sách ngành mới vào MongoDB.
+    Insert danh sách ngành mới vào MongoDB, bỏ qua nếu đã tồn tại (check duplicate theo id).
 
     Args:
         data: list[dict] — raw data từ crawler
 
     Returns:
-        int — số lượng bản ghi đã insert
+        int — số lượng bản ghi mới đã insert
 
     Raises:
         EnvironmentError: nếu MONGODB_URI chưa được thiết lập
@@ -59,16 +59,26 @@ def insert_majors(data: list) -> int:
         return 0
 
     collection = _get_collection()
+    print(f"[DB] Kiểm tra và inserting {len(data)} bản ghi...")
+    
+    count = 0
+    for item in data:
+        major_id = item.get("id")
+        if not collection.find_one({"id": major_id}):
+            collection.insert_one(item)
+            count += 1
+        else:
+            # Duplicate
+            pass
 
+    print(f"[DB] Insert thành công {count} bản ghi mới vào '{DB_NAME}.{COLLECTION_NAME}'.")
+    return count
+
+def delete_all_majors():
+    """Xóa toàn bộ dữ liệu trong DB."""
+    collection = _get_collection()
     print(f"[DB] Xóa dữ liệu cũ trong collection '{COLLECTION_NAME}'...")
     collection.delete_many({})
-
-    print(f"[DB] Inserting {len(data)} bản ghi...")
-    result = collection.insert_many(data)
-
-    count = len(result.inserted_ids)
-    print(f"[DB] Insert thành công {count} bản ghi vào '{DB_NAME}.{COLLECTION_NAME}'.")
-    return count
 
 
 def update_scores_for_major(major_id: str, scores: dict) -> bool:
