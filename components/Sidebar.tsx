@@ -64,16 +64,6 @@ export default function Sidebar({ isDark, onToggleTheme }: SidebarProps) {
           </div>
         )}
 
-        <div className="sidebar-info-box">
-          📡 <strong>API Backend:</strong>
-          <br />
-          <code>/api</code>
-          <br />
-          <br />
-          🗄️ <strong>Database:</strong> MongoDB Atlas
-          <br />
-          🔄 <strong>Cache:</strong> 60 giây
-        </div>
 
         <div className="sidebar-shortcut">
           {isDark ? "☀️" : "🌙"} <strong>Phím tắt:</strong> Nhấn{" "}

@@ -27,6 +27,7 @@ export interface MajorDetail {
   school: string;
   scores: Record<string, number>;
   curriculum: Semester[];
+  outcomesSummary?: string;
 }
 
 export async function searchMajors(): Promise<Major[]> {

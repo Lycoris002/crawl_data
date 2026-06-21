@@ -114,6 +114,29 @@ def update_scores_for_major(major_id: str, scores: dict) -> bool:
     return result.matched_count > 0
 
 
+def update_outcomes_summary(major_id: str, summary: str) -> bool:
+    """
+    Cập nhật tóm tắt chuẩn đầu ra cho một ngành theo ID.
+
+    Args:
+        major_id: giá trị của field "id" trong MongoDB document
+        summary: chuỗi văn bản tóm tắt chuẩn đầu ra
+
+    Returns:
+        True nếu tìm thấy và update, False nếu không tìm thấy document
+    """
+    if not summary:
+        return False
+
+    collection = _get_collection()
+
+    result = collection.update_one(
+        {"id": major_id},
+        {"$set": {"outcomesSummary": summary}},
+    )
+    return result.matched_count > 0
+
+
 # ---------------------------------------------------------------------------
 # Read operations
 # ---------------------------------------------------------------------------

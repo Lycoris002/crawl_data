@@ -6,11 +6,12 @@ import SearchBar from "../components/SearchBar";
 import MajorCard from "../components/MajorCard";
 import ScoresTab from "../components/ScoresTab";
 import CurriculumTab from "../components/CurriculumTab";
+import OutcomesTab from "../components/OutcomesTab";
 import { searchMajors, getCurriculum, Major, MajorDetail } from "../lib/api";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
-  const [activeTab, setActiveTab] = useState<"scores" | "curriculum">("scores");
+  const [activeTab, setActiveTab] = useState<"scores" | "curriculum" | "outcomes">("scores");
 
   // Data
   const [majors, setMajors] = useState<Major[]>([]);
@@ -129,6 +130,13 @@ export default function Home() {
                 >
                   📚 Lộ trình học (Dự kiến)
                 </button>
+                <button
+                  id="tab-outcomes"
+                  className={`tab-btn${activeTab === "outcomes" ? " active" : ""}`}
+                  onClick={() => setActiveTab("outcomes")}
+                >
+                  🎯 Chuẩn đầu ra chương trình
+                </button>
               </div>
 
               {activeTab === "scores" && (
@@ -136,6 +144,9 @@ export default function Home() {
               )}
               {activeTab === "curriculum" && (
                 <CurriculumTab curriculum={detail.curriculum} />
+              )}
+              {activeTab === "outcomes" && (
+                <OutcomesTab summary={detail.outcomesSummary} />
               )}
             </div>
           </>
