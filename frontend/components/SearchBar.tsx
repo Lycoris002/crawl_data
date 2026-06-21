@@ -1,6 +1,6 @@
 "use client";
 
-import { Major } from "@/lib/api";
+import { Major } from "../lib/api";
 
 interface SearchBarProps {
   options: Major[];

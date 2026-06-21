@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Semester } from "@/lib/api";
+import { Semester } from "../lib/api";
 
 interface CurriculumTabProps {
   curriculum: Semester[];

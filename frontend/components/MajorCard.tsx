@@ -1,6 +1,6 @@
 "use client";
 
-import { MajorDetail } from "@/lib/api";
+import { MajorDetail } from "../lib/api";
 
 interface MajorCardProps {
   detail: MajorDetail;

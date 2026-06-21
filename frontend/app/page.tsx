@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Sidebar from "@/components/Sidebar";
-import SearchBar from "@/components/SearchBar";
-import MajorCard from "@/components/MajorCard";
-import ScoresTab from "@/components/ScoresTab";
-import CurriculumTab from "@/components/CurriculumTab";
-import { searchMajors, getCurriculum, Major, MajorDetail } from "@/lib/api";
+import Sidebar from "../components/Sidebar";
+import SearchBar from "../components/SearchBar";
+import MajorCard from "../components/MajorCard";
+import ScoresTab from "../components/ScoresTab";
+import CurriculumTab from "../components/CurriculumTab";
+import { searchMajors, getCurriculum, Major, MajorDetail } from "../lib/api";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
