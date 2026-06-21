@@ -20,7 +20,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from crawler.neu_crawler import crawl_neu_data
-from db.database import insert_majors, search_majors, get_major_by_id
+from crawler.scores_crawler import crawl_scores
+from db.database import insert_majors, search_majors, get_major_by_id, delete_all_majors, get_all_major_codes, update_scores_for_major
 
 app = FastAPI(
     title="NEU Courses API",
@@ -48,12 +49,51 @@ def sync_data():
     Tách biệt hoàn toàn: crawler chỉ crawl, db chỉ insert.
     """
     try:
-        raw_data = crawl_neu_data()        # 1. Crawl
-        count    = insert_majors(raw_data)  # 2. Insert DB
+        delete_all_majors()                # 1. Clear old data
+        raw_data = crawl_neu_data()        # 2. Crawl
+        count    = insert_majors(raw_data)  # 3. Insert DB
         return {
             "status":  "success",
             "message": f"Đã crawl và lưu {count} ngành vào MongoDB Atlas.",
             "count":   count,
+        }
+    except EnvironmentError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lỗi hệ thống: {e}")
+
+
+@app.post("/api/sync-scores")
+def sync_scores():
+    """
+    Kích hoạt crawl điểm chuẩn 2022-2026 cho các ngành hiện có trong DB và cập nhật.
+    """
+    try:
+        majors = get_all_major_codes()
+        if not majors:
+            return {"status": "warning", "message": "DB rỗng, hãy chạy /api/sync trước."}
+            
+        all_codes = [m["major_code"] for m in majors]
+        scores_map = crawl_scores(all_codes)
+        
+        if not scores_map:
+            return {"status": "warning", "message": "Không tìm thấy dữ liệu điểm chuẩn nào."}
+            
+        updated = 0
+        for major in majors:
+            major_id = major["id"]
+            major_code = major["major_code"]
+            
+            new_scores = scores_map.get(major_code)
+            if new_scores:
+                ok = update_scores_for_major(major_id, new_scores)
+                if ok:
+                    updated += 1
+                    
+        return {
+            "status": "success",
+            "message": f"Đã cập nhật điểm chuẩn cho {updated} ngành.",
+            "updated_count": updated
         }
     except EnvironmentError as e:
         raise HTTPException(status_code=500, detail=str(e))

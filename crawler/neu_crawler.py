@@ -215,12 +215,25 @@ def crawl_neu_data() -> list:
 
     for year_cfg in YEARS_CONFIG:
         majors_map = _fetch_majors_for_year(year_cfg)
+        
+        # Cache curriculum theo tên gốc của ngành trong cùng một năm
+        # Key: base_name, Value: curriculum list
+        curriculum_cache = {}
 
         for slug, major_info in majors_map.items():
             print(f"\n  -> {major_info['major_name']} | slug={slug}")
 
-            by_semester    = _fetch_curriculum(slug, major_info["major_code"], year_cfg)
-            curriculum     = _build_curriculum_list(by_semester)
+            # Extract base name by removing " (year_label)" from major_name
+            # e.g., "Kinh tế đầu tư (2025)" -> "kinh tế đầu tư"
+            base_name = major_info["major_name"].rsplit(" (", 1)[0].strip().lower()
+
+            if base_name in curriculum_cache:
+                print(f"       -> [CACHE] Dùng lại chương trình đào tạo từ ngành trùng tên: {base_name}")
+                curriculum = curriculum_cache[base_name]
+            else:
+                by_semester    = _fetch_curriculum(slug, major_info["major_code"], year_cfg)
+                curriculum     = _build_curriculum_list(by_semester)
+                curriculum_cache[base_name] = curriculum
 
             major_info["curriculum"] = curriculum
             all_majors.append(major_info)

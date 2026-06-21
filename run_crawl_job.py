@@ -40,11 +40,14 @@ def main():
         sys.exit(0)
 
     # ---- Bước 2: Insert vào DB ----------------------------------------
-    print(f"\n[2/2] Inserting {len(data)} ngành vào MongoDB ...")
+    from db.database import delete_all_majors
+
+    print(f"\n[2/2] Xóa DB cũ và Inserting {len(data)} ngành vào MongoDB ...")
     try:
+        delete_all_majors()
         inserted = insert_majors(data)
     except Exception as e:
-        print(f"\n[ERROR] Insert DB thất bại: {e}")
+        print(f"\n[ERROR] DB thao tác thất bại: {e}")
         sys.exit(1)
 
     elapsed = time.time() - t0

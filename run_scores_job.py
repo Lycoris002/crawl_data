@@ -1,7 +1,7 @@
 """
 run_scores_job.py
 =================
-Job lấy điểm chuẩn 2022–2024 cho CÁC NGÀNH ĐANG TỒN TẠI trong DB
+Job lấy điểm chuẩn 2022–2026 cho CÁC NGÀNH ĐANG TỒN TẠI trong DB
 và cập nhật (merge) vào field "scores" của từng document.
 
   ✅ KHÔNG xóa curriculum hay dữ liệu khác
@@ -25,7 +25,7 @@ from db.database import get_all_major_codes, update_scores_for_major
 
 def main():
     print("=" * 60)
-    print("  SCORES JOB — Cập nhật điểm chuẩn 2022–2024")
+    print("  SCORES JOB — Cập nhật điểm chuẩn 2022–2026")
     print("=" * 60)
 
     t0 = time.time()

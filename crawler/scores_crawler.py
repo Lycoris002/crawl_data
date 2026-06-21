@@ -1,7 +1,7 @@
 """
 crawler/scores_crawler.py
 =========================
-Job chuyên biệt: Crawl điểm chuẩn (admission scores) từ năm 2022–2024
+Job chuyên biệt: Crawl điểm chuẩn (admission scores) từ năm 2022–2026
 cho các ngành đang tồn tại trong DB.
 
 Nguồn dữ liệu:
@@ -42,27 +42,27 @@ HEADERS = {
 # ---------------------------------------------------------------------------
 REFERENCE_SCORES: dict[str, dict[str, float]] = {
     # Mã ngành thường (7 chữ số)
-    "7310104": {"2022": 27.70, "2023": 27.00, "2024": 27.40},   # Kinh tế đầu tư
-    "7340409": {"2022": 27.20, "2023": 26.75, "2024": 27.15},   # Quản lý dự án
+    "7310104": {"2022": 27.70, "2023": 27.00, "2024": 27.40, "2025": 27.50},   # Kinh tế đầu tư
+    "7340409": {"2022": 27.20, "2023": 26.75, "2024": 27.15, "2025": 26.63},   # Quản lý dự án
     "7340205": {"2022": 27.50, "2023": 27.00, "2024": 27.50},   # Công nghệ tài chính
-    "7340121": {"2022": 28.00, "2023": 27.20, "2024": 27.75},   # Kinh doanh thương mại
+    "7340121": {"2022": 28.00, "2023": 27.20, "2024": 27.75, "2025": 28.00},   # Kinh doanh thương mại
 
     # Chương trình Chất lượng cao (CLC) — thang điểm 30
-    "CLC2":    {"2022": 26.50, "2023": 25.75, "2024": 26.25},   # CLC Kế toán / QTKD
-    "CLC3":    {"2022": 26.25, "2023": 25.50, "2024": 26.00},   # CLC Tài chính NH
+    "CLC2":    {"2022": 26.50, "2023": 25.75, "2024": 26.25, "2025": 26.50},   # CLC Kế toán / QTKD
+    "CLC3":    {"2022": 26.25, "2023": 25.50, "2024": 26.00, "2025": 26.42},   # CLC Tài chính NH
 
     # Chương trình tiên tiến (EP) — thang điểm 40 (Toán hệ số 2)
-    "EP05":    {"2022": 35.50, "2023": 34.75, "2024": 35.25},   # EP Kinh doanh số
-    "EP06":    {"2022": 36.00, "2023": 35.25, "2024": 35.75},   # EP Quản trị kinh doanh
+    "EP05":    {"2022": 35.50, "2023": 34.75, "2024": 35.25, "2025": 26.40},   # EP Kinh doanh số
+    "EP06":    {"2022": 36.00, "2023": 35.25, "2024": 35.75, "2025": 27.50},   # EP Quản trị kinh doanh
     "EP23":    {"2022": 35.00, "2023": 34.25, "2024": 34.75},   # EP Tài chính NH
 
     # Chương trình POHE — thang điểm 30
-    "POHE5":   {"2022": 25.75, "2023": 25.00, "2024": 25.50},   # POHE Kế toán
-    "POHE 5":  {"2022": 25.75, "2023": 25.00, "2024": 25.50},   # alias
+    "POHE5":   {"2022": 25.75, "2023": 25.00, "2024": 25.50, "2025": 26.29},   # POHE Kế toán
+    "POHE 5":  {"2022": 25.75, "2023": 25.00, "2024": 25.50, "2025": 26.29},   # alias
 }
 
 # Năm cần crawl/update
-TARGET_YEARS = ["2022", "2023", "2024"]
+TARGET_YEARS = ["2022", "2023", "2024", "2025", "2026"]
 
 
 # ---------------------------------------------------------------------------
@@ -78,7 +78,7 @@ def _get_reference_scores(major_code: str) -> dict[str, float] | None:
     Tra cứu điểm chuẩn từ REFERENCE_SCORES (đã xác minh).
 
     Returns:
-        dict {"2022": float, "2023": float, "2024": float} hoặc None nếu không có
+        dict {"2022": float, "2023": float, "2024": float, "2025": float, "2026": float} hoặc None nếu không có
     """
     norm = _normalize_code(major_code)
     for key, scores in REFERENCE_SCORES.items():
@@ -155,7 +155,7 @@ def _try_crawl_scores_from_web(major_code: str) -> dict[str, float] | None:
 
 def crawl_scores(major_codes: list[str]) -> dict[str, dict[str, float]]:
     """
-    Crawl điểm chuẩn 2022–2024 cho danh sách mã ngành.
+    Crawl điểm chuẩn 2022–2026 cho danh sách mã ngành.
 
     Ưu tiên:
       1. Crawl từ web (courses.neu.edu.vn)
@@ -165,11 +165,11 @@ def crawl_scores(major_codes: list[str]) -> dict[str, dict[str, float]]:
         major_codes: list mã ngành cần lấy điểm (ví dụ: ["7310104", "CLC2", ...])
 
     Returns:
-        dict { major_code -> { "2022": float, "2023": float, "2024": float } }
+        dict { major_code -> { "2022": float, "2023": float, "2024": float, "2025": float, "2026": float } }
         Chỉ trả về điểm cho các năm có dữ liệu.
     """
     print("=" * 60)
-    print("  SCORES CRAWLER — lấy điểm chuẩn 2022–2024")
+    print("  SCORES CRAWLER — lấy điểm chuẩn 2022–2026")
     print("=" * 60)
 
     result: dict[str, dict[str, float]] = {}
