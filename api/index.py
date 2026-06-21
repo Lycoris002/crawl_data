@@ -1,6 +1,6 @@
 """
-backend/api.py
-==============
+api/index.py
+============
 FastAPI backend — chỉ chứa route definitions.
 Tất cả crawl logic -> crawler/neu_crawler.py
 Tất cả DB logic   -> db/database.py
